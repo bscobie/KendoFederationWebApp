@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MemberApp">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/kendoApp.js"></script>
+    </head>
+
+    <body ng-controller="MemberController as membCtrl">
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+
+            <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
+        </section>
+
+        <header>
+            <div ng-include="'menu.html'" ></div>
+        </header>
+
+        <main ng-controller="EventController as eventCtrl">
+            <section class="boxes">
+                <h2>Upcoming Grading Events</h2>
+                <table id="eventTable">
+                    <thead>
+                        <tr>
+                            <th>Venue</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Highest Grade Available</th>
+                            <th>Head of Grading Panel</th>
+                            <th>Button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="event in eventCtrl.events">
+                            <td>{{event.venue}}</td>
+                            <td>{{event.name}}</td>
+                            <td>{{event.startDateTime}}</td>
+                            <td>{{event.highestGradeAvailable.grade}}</td>
+                            <td>{{event.headOfGradingPanel}}</td>
+                            <td><a href="javascript:void(0)" onclick="document.getElementById('popupBox').style.display = 'inline-block'; document.getElementById('popupBackground').style.display = 'block'">Book Event Slot</a>
+
+                                <div id="popupBox" class="white_content">
+                                    <h1>Confirm Booking</h1>
+                                    <a href="javascript:void(0)" 
+                                       onclick="document.getElementById('popupBox').style.display = 'none'; document.getElementById('popupBackground').style.display = 'none'" 
+                                       class="textright close">X</a>
+
+                                    <p style="clear: both"></p>
+                                    <div id="buttonContainer">
+                                        <a id="popupButtons" ng-click="eventCtrl.bookEvent(event)">Book Event Slot</a>
+                                        <a id="popupButtons" href="javascript:void(0)" 
+                                           onclick="document.getElementById('popupBox').style.display = 'none'; document.getElementById('popupBackground').style.display = 'none'">Cancel</a>
+                                    </div>
+                                </div>
+                                <div id="popupBackground" class="black_overlay"></div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </section>
+        </main>
+    </body>
+</html>
